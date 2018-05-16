@@ -28,7 +28,17 @@ const PersonType = new GraphQLObjectType({
     },
     gender: {
       type: GraphQLString,
-    }
+    },
+    id: {
+      type: GraphQLString,
+      resolve: (person) => person.id.value
+    },
+    dob: {
+      type: GraphQLString
+    },
+    phone: { type: GraphQLString },
+    cell: { type: GraphQLString },
+    registered: { type: GraphQLString }
   })
 });
 
