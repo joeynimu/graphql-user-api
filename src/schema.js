@@ -11,34 +11,27 @@ import { BASE_URL } from './constants'
 
 const PersonType = new GraphQLObjectType({
   name: 'Person',
-  description: 'This is a person type',
+  description: 'A star wars Ccaracter',
   fields: () => ({
-    firstName: {
+    name: {
       type: GraphQLString,
-      description: 'A person\'s first name',
-      resolve: (person) => person.name.first 
-    },
-    lastName: {
-      type: GraphQLString,
-      description: 'A person\'s last name',
-      resolve: (person) => person.name.last 
-    },
-    email: {
-      type: GraphQLString
+      description: 'A character\'s  name',
+      resolve: (person) => person.name 
     },
     gender: {
-      type: GraphQLString,
-    },
-    id: {
-      type: GraphQLString,
-      resolve: (person) => person.id.value
-    },
-    dob: {
       type: GraphQLString
-    },
-    phone: { type: GraphQLString },
-    cell: { type: GraphQLString },
-    registered: { type: GraphQLString }
+    }
+    // vehicles: {
+    //   type: GraphQLString,
+    // },
+    // films: {
+    //   type: GraphQLString,
+    //   resolve: (person) => person.id.value
+    // },
+    // species: {
+    //   type: GraphQLString
+    // },
+    // starships: { type: GraphQLString }
   })
 });
 
@@ -48,11 +41,22 @@ const QueryType = new GraphQLObjectType({
   fields: () => ({
     People: {
       type: new GraphQLList(PersonType),
-      description: 'Everyone in the world',
-      resolve: (root, args) => fetch(`${BASE_URL}?results=5000`)
+      description: 'All Star Wars Characters',
+      resolve: (root, args) => fetch(`${BASE_URL}/people`)
         .then(data => data.json())
         .then(res => res.results)
-    }
+    },
+    Person: {
+      type: PersonType,
+      args: {
+        id: { 
+          type: GraphQLString
+        }
+      },
+      resolve: (root, args) => fetch(`${BASE_URL}/people/${args.id}`)
+          .then(data => data.json())
+          .then(res => res)
+      }
   })
 })
 
