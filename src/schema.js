@@ -20,18 +20,23 @@ const PersonType = new GraphQLObjectType({
     },
     gender: {
       type: GraphQLString
+    },
+    vehicles: {
+      type: new GraphQLList(GraphQLString),
+      resolve: (person) => person.vehicles
+    },
+    films: {
+      type: GraphQLList(GraphQLString),
+      resolve: (person) => person.films 
+    },
+    species: {
+      type: GraphQLList(GraphQLString),
+      resolve: (person) => person.species 
+    },
+    starships: { 
+      type: GraphQLList(GraphQLString),
+      resolve: (person) => person.starships 
     }
-    // vehicles: {
-    //   type: GraphQLString,
-    // },
-    // films: {
-    //   type: GraphQLString,
-    //   resolve: (person) => person.id.value
-    // },
-    // species: {
-    //   type: GraphQLString
-    // },
-    // starships: { type: GraphQLString }
   })
 });
 
@@ -61,5 +66,5 @@ const QueryType = new GraphQLObjectType({
 })
 
 export default new GraphQLSchema({
-  query: QueryType,
+  query: QueryType
 });
