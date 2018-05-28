@@ -60,7 +60,7 @@ const QueryType = new GraphQLObjectType({
       type: PersonType,
       args: {
         id: { 
-          type: !GraphQLString
+          type: GraphQLString
         }
       },
       resolve: (root, args) => fetch(`${BASE_URL}/people/${args.id}`)
