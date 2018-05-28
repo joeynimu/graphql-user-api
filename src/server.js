@@ -15,14 +15,14 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json())
 
-app.use(graphqlHTTP(req => {
-  return {
+app.use(graphqlHTTP({
     graphiql: true,
     schema,
     pretty: true
-  }
-}))
+}));
 
-
-
-app.listen(APP_PORT, () => console.log(`GraphQL server running at ${APP_PORT}`))
+try {
+  app.listen(APP_PORT, () => console.log(`GraphQL server running at ${APP_PORT}`))
+} catch (error) {
+  console.log(`Something went wrong ${error}`)
+}

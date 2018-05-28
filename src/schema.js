@@ -11,7 +11,7 @@ import { BASE_URL } from './constants'
 
 const PersonType = new GraphQLObjectType({
   name: 'Person',
-  description: 'A star wars Ccaracter',
+  description: 'A star wars Character',
   fields: () => ({
     name: {
       type: GraphQLString,
@@ -19,22 +19,27 @@ const PersonType = new GraphQLObjectType({
       resolve: (person) => person.name 
     },
     gender: {
-      type: GraphQLString
+      type: GraphQLString,
+      description: 'A star wars gender'
     },
     vehicles: {
       type: new GraphQLList(GraphQLString),
+      description: 'A list<Array> of vehicles owned by a character',
       resolve: (person) => person.vehicles
     },
     films: {
       type: GraphQLList(GraphQLString),
+      description: 'A list<Array> of films that a character has featured in',
       resolve: (person) => person.films 
     },
     species: {
       type: GraphQLList(GraphQLString),
+      description: 'The species of a character',
       resolve: (person) => person.species 
     },
     starships: { 
       type: GraphQLList(GraphQLString),
+      description: 'A list<Array> of starchips owned by a character',
       resolve: (person) => person.starships 
     }
   })
@@ -55,7 +60,7 @@ const QueryType = new GraphQLObjectType({
       type: PersonType,
       args: {
         id: { 
-          type: GraphQLString
+          type: !GraphQLString
         }
       },
       resolve: (root, args) => fetch(`${BASE_URL}/people/${args.id}`)
