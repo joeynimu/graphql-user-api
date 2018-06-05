@@ -6,7 +6,6 @@ import bodyParser from 'body-parser';
 import { APP_PORT } from './constants'
 import schema from './schema'
 
-
 const app  = express();
 
 app.use(bodyParser.urlencoded({

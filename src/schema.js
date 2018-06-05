@@ -5,9 +5,9 @@ import {
   GraphQLSchema
 } from 'graphql';
 
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
 
-import { BASE_URL } from './constants'
+import { BASE_URL } from './constants';
 
 const PersonType = new GraphQLObjectType({
   name: 'Person',
@@ -16,11 +16,12 @@ const PersonType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
       description: 'A character\'s  name',
-      resolve: (person) => person.name 
+      resolve: (person) => person.name
     },
     gender: {
       type: GraphQLString,
-      description: 'A star wars gender'
+      description: 'A star wars gender',
+      resolve: (person) => person.gender
     },
     vehicles: {
       type: new GraphQLList(GraphQLString),
@@ -53,8 +54,8 @@ const QueryType = new GraphQLObjectType({
       type: new GraphQLList(PersonType),
       description: 'All Star Wars Characters',
       resolve: (root, args) => fetch(`${BASE_URL}/people`)
-        .then(data => data.json())
-        .then(res => res.results)
+        .then(response => response.json())
+        .then(data => data.results)
     },
     Person: {
       type: PersonType,
@@ -64,8 +65,8 @@ const QueryType = new GraphQLObjectType({
         }
       },
       resolve: (root, args) => fetch(`${BASE_URL}/people/${args.id}`)
-          .then(data => data.json())
-          .then(res => res)
+          .then(response => response.json())
+          .then(data => data)
       }
   })
 })
